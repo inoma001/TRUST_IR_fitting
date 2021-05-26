@@ -31,26 +31,23 @@ opts.StartPoint = [-20000 40000 1500];
 % Fit model to data.
 [fitresult, gof] = fit( xData, yData, ft, opts );
 
-a=fitresult.a
-b=fitresult.b
-
-T1_str=num2str(fitresult.c/1000)
+T1_str=num2str(fitresult.c/1000);
 T1_string=['T1 (s) ' T1_str];
 
 
 % Plot fit with data.
-figure( 'Name', 'T1 fitting' );
-h = plot( fitresult, xData, yData );
+%figure( 'Name', 'T1 fitting' );
+%h = plot( fitresult, xData, yData );
 
 
-rmse_str=num2str(gof.rmse);
-rmse_string=['RMSE ' rmse_str]; 
+%rmse_str=num2str(gof.rmse);
+%rmse_string=['RMSE ' rmse_str]; 
 
-legend( h, T1_string, rmse_string, 'Location', 'NorthEast' );
+%legend( h, T1_string, rmse_string, 'Location', 'NorthEast' );
 
 % Label axes 
-xlabel TI(s)
-ylabel Mz
-grid on
+%xlabel TI(s)
+%ylabel Mz
+%grid on
 
 
