@@ -18,36 +18,39 @@ function [fitresult, gof] = createT1_Fit(TI_vect_repeat, T1_vect)
 [xData, yData] = prepareCurveData( TI_vect_repeat, T1_vect );
 
 % Set up fittype and options.
-ft = fittype( 'abs(a*(1-b*exp(-x/c)))', 'independent', 'x', 'dependent', 'y' );
+%ft = fittype( 'abs(a*(1-b*exp(-x/c)))', 'independent', 'x', 'dependent', 'y' );
+ft = fittype( 'abs(a + (b*exp(-x/c)))', 'independent', 'x', 'dependent', 'y' ); 
 opts = fitoptions( 'Method', 'NonlinearLeastSquares' );
 opts.Display = 'Off';
-%opts.Lower = [10000 -Inf -Inf];
+
+%opts.Lower = [5000 -Inf -Inf];
 %opts.StartPoint = [15000 20 1500];
-
-
-opts.Lower = [5000 -Inf -Inf];
-opts.StartPoint = [15000 20 1500];
+opts.Upper = [-5000 Inf Inf];
+opts.StartPoint = [-20000 40000 1500];
 
 % Fit model to data.
 [fitresult, gof] = fit( xData, yData, ft, opts );
 
-T1_str=num2str(fitresult.c/1000);
+a=fitresult.a
+b=fitresult.b
+
+T1_str=num2str(fitresult.c/1000)
 T1_string=['T1 (s) ' T1_str];
 
 
 % Plot fit with data.
-%figure( 'Name', 'T1 fitting' );
-%h = plot( fitresult, xData, yData );
+figure( 'Name', 'T1 fitting' );
+h = plot( fitresult, xData, yData );
 
 
-%rmse_str=num2str(gof.rmse);
-%rmse_string=['RMSE ' rmse_str]; 
+rmse_str=num2str(gof.rmse);
+rmse_string=['RMSE ' rmse_str]; 
 
-%legend( h, T1_string, rmse_string, 'Location', 'NorthEast' );
+legend( h, T1_string, rmse_string, 'Location', 'NorthEast' );
 
 % Label axes 
-%xlabel TI(s)
-%ylabel Mz
-%grid on
+xlabel TI(s)
+ylabel Mz
+grid on
 
 

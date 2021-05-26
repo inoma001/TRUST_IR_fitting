@@ -48,11 +48,11 @@ T1 = num2str(round(T1, 5, 'significant'));
 
 % write result to text file
 
-fileID = fopen([data_folder '/T1.txt'],'w');
-fprintf(fileID, T1);
-fclose(fileID);
+%fileID = fopen([data_folder '/T1.txt'],'w');
+%fprintf(fileID, T1);
+%fclose(fileID);
 %exit matlab 
-exit
+%exit
 
 end
 
