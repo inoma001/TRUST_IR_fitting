@@ -1,4 +1,4 @@
-function [fitresult, gof] = createT1_Fit(TI_vect_repeat, T1_vect)
+function [fitresult, gof] = createT1_Fit(TI_vect_repeat, T1_vect, do_plot)
 %CREATEFIT(TI_VECT_REPEAT,T1_VECT)
 %  Create a fit.
 %
@@ -35,19 +35,19 @@ T1_str=num2str(fitresult.c/1000);
 T1_string=['T1 (s) ' T1_str];
 
 
-% Plot fit with data.
-%figure( 'Name', 'T1 fitting' );
-%h = plot( fitresult, xData, yData );
-
-
-%rmse_str=num2str(gof.rmse);
-%rmse_string=['RMSE ' rmse_str]; 
-
-%legend( h, T1_string, rmse_string, 'Location', 'NorthEast' );
-
-% Label axes 
-%xlabel TI(s)
-%ylabel Mz
-%grid on
+if do_plot>0
+    % Plot fit with data.
+    figure( 'Name', 'T1 fitting' );
+    h = plot( fitresult, xData, yData );
+    rmse_str=num2str(gof.rmse);
+    rmse_string=['RMSE ' rmse_str]; 
+ 
+    legend( h, T1_string, rmse_string, 'Location', 'NorthEast' );
+ 
+    % Label axes 
+    xlabel TI(s)
+    ylabel Mz
+    grid on
+end
 
 

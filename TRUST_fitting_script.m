@@ -3,7 +3,7 @@ function [Y,OEF_est,T2b]=TRUST_fitting_script(data_folder)
 %need T1 in seconds (from IR sequence fits)
 fileID = fopen([data_folder '/IR/T1.txt'],'r');
 tline = fgetl(fileID);
-T1=str2num(tline)
+T1=str2num(tline);
 
 %load data
 d = dir([data_folder '/TRUST/*.nii']);
@@ -69,6 +69,8 @@ OEF = num2str(round(OEF_est, 4, 'significant'));
 fileID = fopen([data_folder '/TRUST/OEF.txt'],'w');
 fprintf(fileID, OEF);
 fclose(fileID);
+% pause matlab for 3 seconds to allow assesment of fit on graph
+pause(3)
 %exit matlab 
 exit
 

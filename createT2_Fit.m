@@ -28,13 +28,13 @@ opts.StartPoint = [400 0.0]; %620009054156165
 [fitresult, gof] = fit( xData, yData, ft, opts );
 
 % Plot fit with data.
-%figure( 'Name', 'T2 fit' );
-%h = plot( fitresult, xData, yData );
-%legend( h, 'dS0 vs. eTE', 'T2 fit', 'Location', 'NorthEast' );
+figure( 'Name', 'T2 fit' );
+h = plot( fitresult, xData, yData );
+legend( h, 'dS0 vs. eTE', 'T2 fit', 'Location', 'NorthEast' );
 
 % Label axes
-%xlabel eTE
-%ylabel dS0
-%grid on
+xlabel eTE
+ylabel dS0
+grid on
 
 
