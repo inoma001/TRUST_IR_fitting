@@ -34,7 +34,7 @@ eTE(2)=40;
 eTE(3)=80;
 eTE(4)=160;
 
-[fitresult, gof] = createT2_Fit(eTE, TRUST_mean');
+[fitresult, gof] = createT2_Fit(eTE, TRUST_mean',[data_folder '/TRUST']);
 
 C1=fitresult.c;
 
@@ -65,12 +65,23 @@ OEF_est=0.98-Y
 
 % write result to text file
 OEF = num2str(round(OEF_est, 4, 'significant'));
+T2b = num2str(round(T2b, 4, 'significant'));
+Hct = num2str(round(Hct, 4, 'significant'));
 
 fileID = fopen([data_folder '/TRUST/OEF.txt'],'w');
 fprintf(fileID, OEF);
 fclose(fileID);
-% pause matlab for 3 seconds to allow assesment of fit on graph
-pause(3)
+
+fileID = fopen([data_folder '/TRUST/T2b.txt'],'w');
+fprintf(fileID, T2b);
+fclose(fileID);
+
+fileID = fopen([data_folder '/TRUST/Hct.txt'],'w');
+fprintf(fileID, Hct);
+fclose(fileID);
+
+% pause matlab for 2 seconds to allow assesment of fit on graph
+pause(2)
 %exit matlab 
 exit
 

@@ -1,4 +1,4 @@
-function [fitresult, gof] = createT2_Fit(eTE, TRUST_mean)
+function [fitresult, gof] = createT2_Fit(eTE, TRUST_mean, data_folder )
 %CREATEFIT(ETE,TRUST_MEAN)
 %  Create a fit.
 %
@@ -15,14 +15,14 @@ function [fitresult, gof] = createT2_Fit(eTE, TRUST_mean)
 
 
 %% Fit: 'untitled fit 1'.
-[xData, yData] = prepareCurveData( eTE, TRUST_mean );
+[xData, yData] = prepareCurveData( eTE, TRUST_mean);
 
 % Set up fittype and options.
 ft = fittype( 'a*exp(x*c)', 'independent', 'x', 'dependent', 'y' );
 opts = fitoptions( 'Method', 'NonlinearLeastSquares' );
 opts.Display = 'Off';
 opts.Lower = [200 -Inf];
-opts.StartPoint = [400 0.0]; %620009054156165
+opts.StartPoint = [400 0.0]; 
 
 % Fit model to data.
 [fitresult, gof] = fit( xData, yData, ft, opts );
@@ -36,5 +36,8 @@ legend( h, 'dS0 vs. eTE', 'T2 fit', 'Location', 'NorthEast' );
 xlabel eTE
 ylabel dS0
 grid on
+%save fit figure
+f=gcf;
+exportgraphics(f,[data_folder '/T2_fit.png'],'Resolution',300);
 
 

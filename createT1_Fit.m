@@ -1,4 +1,4 @@
-function [fitresult, gof] = createT1_Fit(TI_vect_repeat, T1_vect, do_plot)
+function [fitresult, gof] = createT1_Fit(TI_vect_repeat, T1_vect, data_folder, do_plot)
 %CREATEFIT(TI_VECT_REPEAT,T1_VECT)
 %  Create a fit.
 %
@@ -21,6 +21,8 @@ function [fitresult, gof] = createT1_Fit(TI_vect_repeat, T1_vect, do_plot)
 %ft = fittype( 'abs(a*(1-b*exp(-x/c)))', 'independent', 'x', 'dependent', 'y' );
 ft = fittype( 'abs(a + (b*exp(-x/c)))', 'independent', 'x', 'dependent', 'y' ); 
 opts = fitoptions( 'Method', 'NonlinearLeastSquares' );
+% see if this will make fitting more robust
+opts.Robust ='on';
 opts.Display = 'Off';
 
 %opts.Lower = [5000 -Inf -Inf];
@@ -48,6 +50,8 @@ if do_plot>0
     xlabel TI(s)
     ylabel Mz
     grid on
+    f=gcf;
+    exportgraphics(f,[data_folder '/T1_fit.png'],'Resolution',300);
 end
 
 

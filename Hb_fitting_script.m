@@ -1,7 +1,6 @@
 function [Hct,Hb,T1,gof]=Hb_fitting_script(data_folder)
 
-%data_points=40;
-data_points=50;
+data_points=40;
 
 %load data
 d = dir([data_folder '/*.nii']);
@@ -45,7 +44,7 @@ for vox = 1:20
         Tone_vect_repeat(1+(i-1)*data_points:i*data_points)=Tone_vect(1+(i-1)*60:data_points+(i-1)*60);
     end
 
-    [fitresult, gof] = createT1_Fit(TI_vect_repeat, Tone_vect_repeat,do_plot);
+    [fitresult, gof] = createT1_Fit(TI_vect_repeat, Tone_vect_repeat, data_folder, do_plot);
     
     %T1 in seconds
     T1=fitresult.c/1000;
@@ -71,20 +70,15 @@ for vox = 1:20
         y=n;
     end
 
-%Hb=(((1/T1 - 0.28)/0.83)-0.0083)/0.0301;
-%Hct =(0.0485*Hb*0.6206+0.0083)*100;
-
 end
 
 % plot selected fit to check it is correct
 do_plot=1;
-x
-y
 Tone_vect=(squeeze(T1_data(x,y,1,1:end))); 
 for i=1:16
     Tone_vect_repeat(1+(i-1)*data_points:i*data_points)=Tone_vect(1+(i-1)*60:data_points+(i-1)*60);
 end
-[fitresult, gof] = createT1_Fit(TI_vect_repeat, Tone_vect_repeat,do_plot);
+[fitresult, gof] = createT1_Fit(TI_vect_repeat, Tone_vect_repeat, data_folder, do_plot);
 
 % % sort T1 array by residuals
 % sortrows(T1_array)
@@ -108,8 +102,8 @@ end
 fileID = fopen([data_folder '/T1.txt'],'w');
 fprintf(fileID, T1_out);
 fclose(fileID);
-% pause matlab for 5 seconds to allow assesment of fit on graph
-pause(5)
+% pause matlab for 2 seconds to allow assesment of fit on graph
+pause(2)
 %exit matlab 
 exit
 
