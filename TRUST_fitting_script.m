@@ -34,7 +34,7 @@ eTE(2)=40;
 eTE(3)=80;
 eTE(4)=160;
 
-[fitresult, gof] = createT2_Fit(eTE, TRUST_mean',[data_folder '/TRUST']);
+[fitresult, gof] = createT2_Fit(eTE, TRUST_mean',[data_folder '/TRUST']); %'
 
 C1=fitresult.c;
 
@@ -43,25 +43,20 @@ Hb=(((1/T1 - 0.28)/0.83)-0.0083)/0.0301; %use IR T1 to Hb equation (ignoring T2 
 
 Hct=(0.0485*Hb*0.6206+0.0083) %convert Hb to Hct
 
-% Y calculation from Lu et al 2012. Calibration and Validation of TRUST MRI for the
-% Estimation of Cerebral Blood Oxygenation
-a1=-13.5;
-a2=80.2;
-a3=-75.9;
-b1=-0.5;
-b2=3.4;
-c1=247.4;
+% Y calculation from Bush et al 2017 'Empirical Model of Human Blood Transverse Relaxation at 3T Improves MRI T2 Oximetry'
 
 
-A=a1+a2*Hct+a3*Hct^2;
-B=b1*Hct+b2*Hct^2;
-C=c1*Hct*(1-Hct);
+A1 = 77.5;
+A2 = 27.8;
+A3 = 6.95;
+A4 = 2.34;
 
+R2b = 1000/T2b
 
-%solution to quadratic to get (1-Y)
-one_minus_Y=-(B-sqrt(B*B-4*C*(A-1/(T2b/1000))))/(2*C);
+one_minus_Y = sqrt ( (R2b - A3*Hct - A4)/(A1*Hct + A2) )
 Y=1-one_minus_Y;
 OEF_est=0.98-Y
+
 
 % write result to text file
 OEF = num2str(round(OEF_est, 4, 'significant'));
