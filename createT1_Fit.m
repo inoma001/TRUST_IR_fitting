@@ -25,8 +25,7 @@ opts = fitoptions( 'Method', 'NonlinearLeastSquares' );
 opts.Robust ='on';
 opts.Display = 'Off';
 
-%opts.Lower = [5000 -Inf -Inf];
-%opts.StartPoint = [15000 20 1500];
+
 opts.Upper = [-5000 Inf Inf];
 opts.StartPoint = [-20000 40000 1500];
 
