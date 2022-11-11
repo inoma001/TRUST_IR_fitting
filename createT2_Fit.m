@@ -1,4 +1,4 @@
-function [fitresult, gof] = createT2_Fit(eTE, TRUST_mean, data_folder )
+function [fitresult, gof] = createT2_Fit(eTE, TRUST_mean, data_folder ,do_plot)
 %CREATEFIT(ETE,TRUST_MEAN)
 %  Create a fit.
 %
@@ -28,9 +28,11 @@ opts.StartPoint = [400 0.0];
 [fitresult, gof] = fit( xData, yData, ft, opts );
 
 % Plot fit with data.
-figure( 'Name', 'T2 fit' );
-h = plot( fitresult, xData, yData );
-legend( h, 'dS0 vs. eTE', 'T2 fit', 'Location', 'NorthEast' );
+if do_plot>0
+	figure( 'Name', 'T2 fit' );
+	h = plot( fitresult, xData, yData );
+	legend( h, 'dS0 vs. eTE', 'T2 fit', 'Location', 'NorthEast' );
+end
 
 % Label axes
 xlabel eTE

@@ -26,12 +26,12 @@ roi=sort(slice(:),'descend');
 do_plot=1;
 
 data_points=4;
-for i=1:9 %3 averages x 3 voxels
+for i=1:9 % 9 %3 averages x 3 voxels
     eTE_repeat(1+(i-1)*data_points:i*data_points)=eTE;
 end
 
 
-for vox = 1:3 %try most intense 3 voxels..
+for vox = 1:3 % 3 %try most intense 3 voxels..
     
     [m, n] = find(slice == roi(vox));
     
@@ -44,7 +44,7 @@ end
 C1=fitresult.c;
 
 T2b=1/(1/(T1*1000)-C1);
-Hb=(((1/T1 - 0.28)/0.83)-0.0083)/0.0301; %use IR T1 to Hb equation (ignoring T2 contribution for now, but could correct for blood T2 when calculating [Hb])
+Hb=(((1/T1 - 0.28)/0.83)-0.0083)/0.0301 %use IR T1 to Hb equation (ignoring T2 contribution for now, but could correct for blood T2 when calculating [Hb])
 
 Hct=(0.0485*Hb*0.6206+0.0083) %convert Hb to Hct
 
@@ -65,7 +65,7 @@ OEF_est=0.98-Y
 % write result to text file
 OEF = num2str(round(OEF_est, 4, 'significant'));
 T2b = num2str(round(T2b, 4, 'significant'));
-Hct = num2str(round(Hct, 4, 'significant'));
+Hb = num2str(round(Hb, 4, 'significant'));
 
 fileID = fopen([data_folder '/TRUST/OEF.txt'],'w');
 fprintf(fileID, OEF);
@@ -75,8 +75,8 @@ fileID = fopen([data_folder '/TRUST/T2b.txt'],'w');
 fprintf(fileID, T2b);
 fclose(fileID);
 
-fileID = fopen([data_folder '/TRUST/Hct.txt'],'w');
-fprintf(fileID, Hct);
+fileID = fopen([data_folder '/TRUST/Hb.txt'],'w');
+fprintf(fileID, Hb);
 fclose(fileID);
 
 % pause matlab for 2 seconds to allow assesment of fit on graph
